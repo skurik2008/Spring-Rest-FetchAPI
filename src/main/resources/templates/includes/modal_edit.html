@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.w3.org/1999/xhtml">
+      xmlns:th="http://www.w3.org/1999/xhtml" >
 <html lang="en">
 <body>
 <div th:fragment="modal_edit">
-    <div class="modal fade" id="editModal" th:attrappend="id=${user.getId()}">
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -13,39 +13,36 @@
                 </div>
                 <div class="container-fluid-center"><div class="row"><div class="col-md-8 offset-md-2">
                     <div class="modal-body text-center">
-                        <form id="editForm" th:attrappend="id=${user.getId()}" th:method="PATCH" th:action="@{/admin/update_user}">
+                        <form id="editForm">
                             <h6><label>ID</label></h6>
-                            <input id="id" th:attrappend="id=${user.getId()}" type="text" class="form-control" th:value="${user.getId()}" disabled>
-                            <input name="id" type="hidden" th:value="${user.getId()}">
+                            <input id="idEdit"  name="id" type="text" class="form-control" disabled>
+                            <input id="idHidden" name="id" type="hidden">
                             <h6><label>First Name</label></h6>
-                            <input  name="firstName" class="form-control" type="text" th:value="${user.getFirstName()}">
+                            <input  id="firstNameEdit" name="firstName" class="form-control" type="text">
                             <h6><label>Last Name</label></h6>
-                            <input  name="lastName" class="form-control" type="text" th:value="${user.getLastName()}">
+                            <input  id="lastNameEdit" name="lastName" class="form-control" type="text">
                             <h6><label>Age</label></h6>
-                            <input  name="age" class="form-control" type="number" th:value="${user.getAge()}" min="1" max="127">
+                            <input  id="ageEdit" name="age" class="form-control" type="number" min="1" max="127">
                             <h6><label>Email</label></h6>
-                            <input  name="email" class="form-control" type="text" th:value="${user.getEmail()}" required>
+                            <input  id="emailEdit" name="email" class="form-control" type="text" required>
                             <h6><label>Password</label></h6>
-                            <input name="password" class="form-control" type="password">
+                            <input id="passwordEdit" name="password" class="form-control" type="password">
                             <h6><label>Role</label></h6>
-                            <select multiple name="role"  class="form-select" size="2" required>
+                            <select multiple id="role" name="role" datatype=""  class="form-select" size="2" required>
                                 <option value="2">USER</option>
                                 <option value="1">ADMIN</option>
                             </select>
-                            <input type="hidden" name="id_current_user" th:value="${user_current.getId()}">
                             <br>
-                            <!--<button type="input" class="btn btn-success">Add new user</button>-->
                         </form>
                     </div>
                 </div></div></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button form="editForm" th:attrappend="form=${user.getId()}" type="input" class="btn btn-primary">Edit</button>
+                    <button form="editForm"  type="submit" class="btn btn-primary" data-bs-dismiss="modal">Edit</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 </body>
 </html>

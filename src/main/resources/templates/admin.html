@@ -4,8 +4,18 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <!-- Bootstrap CSS (Cloudflare CDN) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.6.3.js"
+            integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+            crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{js/main.js}" src="../static/js/main.js"></script>
     <title>Spring Security Example</title>
 </head>
 <div th:replace="~{includes/header}"></div>
@@ -17,17 +27,17 @@
                 <a class="nav-link active" style="width: 200px;"  type="button">Admin</a>
             </div>
             <div th:if="${user_current.getRoleValues().contains('USER')}" class="nav flex-column nav-pills me-5" role="tablist" aria-orientation="vertical">
-                <a class="nav-link active" style="width: 200px;" type="button">Admin</a>
-                <a class="nav-link" href="/user" role="button">User</a>
+                <a class="nav-link active"  style="width: 200px;" type="button">Admin</a>
+                <a class="nav-link" id="nav-link-user" href="/user" role="button">User</a>
             </div>
             <div class="flex-column" >
                     <h1>Admin panel</h1>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#userTable" role="tab" aria-controls="home">Users Table</a>
+                            <a class="nav-link active" id="nav-link-users-table"  data-bs-toggle="tab" data-bs-target="#userTable" role="tab" aria-controls="home">Users Table</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#newUser" role="tab" aria-controls="profile">New user</a>
+                            <a class="nav-link" id="nav-link-new-user" data-bs-toggle="tab" data-bs-target="#newUser" role="tab" aria-controls="profile">New user</a>
                         </li>
                     </ul>
                     <div style="width: 1060px;" class="tab-content" >
@@ -55,24 +65,9 @@
                                                             <th scope="col">Delete</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-                                                        <tr th:each="user: ${users}">
-                                                            <td><text th:text="${user.getId()}"></text></td>
-                                                            <td><text th:text="${user.getFirstName()}"></text></td>
-                                                            <td><text th:text="${user.getLastName()}"></text></td>
-                                                            <td><text th:text="${user.getAge()}"></text></td>
-                                                            <td><text th:text="${user.getEmail  ()}"></text></td>
-                                                            <td><text th:text="${user.getRoleValues()}"></text></td>
-                                                            <td><button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                                        data-bs-target="#editModal"
-                                                                        th:attrappend="data-bs-target=${user.getId()}">Edit</button></td>
-                                                            <td><button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                                        data-bs-target="#deleteModal"
-                                                                        th:attrappend="data-bs-target=${user.getId()}">Delete</button></td>
-
+                                                    <tbody id="table_body_users">
                                                             <div th:replace="~{includes/modal_edit}"></div>
                                                             <div th:replace="~{includes/modal_delete}"></div>
-                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -98,10 +93,8 @@
                             </table>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    </div>
 </body>
 </html>

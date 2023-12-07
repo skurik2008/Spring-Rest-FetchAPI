@@ -4,7 +4,7 @@
 <html lang="en">
 <body>
 <div th:fragment="modal_delete">
-    <div class="modal fade" id="deleteModal" th:attrappend="id=${user.getId()}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -13,33 +13,32 @@
                 </div>
                 <div class="container-fluid-center"><div class="row"><div class="col-md-8 offset-md-2">
                     <div class="modal-body text-center">
-                        <form id="deleteForm" th:attrappend="id=${user.getId()}" th:method="DELETE" th:action="@{/admin/delete}" >
+                        <form id="deleteForm">
                             <h6><label>ID</label></h6>
-                            <input id="id_del" th:attrappend="id=${user.getId()}" type="text" class="form-control" th:value="${user.getId()}" disabled>
-                            <input name="id" type="hidden" th:value="${user.getId()}">
+                            <input id="idDel" name="id" type="text" class="form-control" disabled>
+                            <input id="idHiddenDel" name="id" type="hidden">
                             <h6><label>First Name</label></h6>
-                            <input id="firstName_del" name="firstName" class="form-control" type="text" th:value="${user.getFirstName()}" disabled>
+                            <input id="firstNameDel" name="firstName" class="form-control" type="text" disabled>
                             <h6><label>Last Name</label></h6>
-                            <input id="lastName_del" name="lastName" class="form-control" type="text" th:value="${user.getLastName()}" disabled>
+                            <input id="lastNameDel" name="lastName" class="form-control" type="text" disabled>
                             <h6><label>Age</label></h6>
-                            <input id="age_del" name="age" class="form-control" type="number" th:value="${user.getAge()}" min="1" max="127" disabled>
+                            <input id="ageDel" name="age" class="form-control" type="number" min="1" max="127" disabled>
                             <h6><label>Email</label></h6>
-                            <input id="email_del" name="email" class="form-control" type="text" th:value="${user.getEmail()}" disabled>
+                            <input id="emailDel" name="email" class="form-control" type="text" disabled>
                             <h6><label>Password</label></h6>
-                            <input id="password_del" class="form-control" type="password" name="password" disabled>
+                            <input id="passwordDel" class="form-control" type="password" name="password" disabled>
                             <h6><label>Role</label></h6>
                             <select multiple id="role_del" name="roles_id"  class="form-select" size="2" disabled>
                                 <option value="2">USER</option>
                                 <option value="1">ADMIN</option>
                             </select>
                             <br>
-                            <!--<button type="input" class="btn btn-success">Add new user</button>-->
                         </form>
                     </div>
                 </div></div></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button form="deleteForm" th:attrappend="form=${user.getId()}" type="input" class="btn btn-primary">Delete</button>
+                    <button form="deleteForm"  type="submit" class="btn btn-primary" data-bs-dismiss="modal">Delete</button>
                 </div>
             </div>
         </div>

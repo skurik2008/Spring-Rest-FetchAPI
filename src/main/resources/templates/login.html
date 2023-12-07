@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-signin" method="post" th:action="@{/perform-login}">
+    <form class="form-signin" method="post" th:action="@{/login}">
         <h2 class="form-signin-heading">Please sign in</h2>
         <div th:if="${param.error}" class="alert alert-error">
             Неправильные имя и пароль.

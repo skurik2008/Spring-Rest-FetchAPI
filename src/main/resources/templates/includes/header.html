@@ -7,10 +7,7 @@
     <header class="p-0 text-bg-dark">
       <div class="container-fluid">
         <div class="navbar navbar-dark bg-dark">
-                    <span class="navbar-brand">
-                        <b th:text="${user_current.getEmail()}"></b>
-                        <text>with roles:</text>
-                        <text th:text="${user_current.getRoleValues()}"></text>
+                    <span class="navbar-brand" th:id_user="${user_current.getId()}">
                     </span>
           <ul class="nav navbar-nav navbar-right">
             <a class="nav-link" href="/login">Logout</a>

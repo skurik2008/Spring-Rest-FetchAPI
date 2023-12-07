@@ -8,25 +8,25 @@
         <div class="row">
             <div class="col-md-4 offset-md-2">
                 <div class="modal-body text-center">
-                    <form id="new_user_form" th:method="POST" th:action="@{/admin/user_save}" th:object="${user_model}">
-                        <input id="id-new" type="hidden" th:field="*{id}">
+                    <form id="new_user_form">
+                        <input id="id-new" name="idHidden" type="hidden" value="0">
                         <h6><label for="firstName-new">First Name</label></h6>
-                        <input id="firstName-new" class="form-control" data-bs-theme="" type="text" th:field="*{firstName}">
+                        <input id="firstName-new" name="firstName" class="form-control" type="text">
                         <h6><label for="lastName-new">Last Name</label></h6>
-                        <input  id="lastName-new" class="form-control" type="text" th:field="*{lastName}">
+                        <input  id="lastName-new" name="lastName" class="form-control" type="text">
                         <h6><label for="age-new">Age</label></h6>
-                        <input id="age-new" class="form-control" type="number" th:field="*{age}" min="1" max="127">
+                        <input id="age-new" name="age" class="form-control" type="number" min="1" max="127">
                         <h6><label for="email-new">Email</label></h6>
-                        <input id="email-new" class="form-control" type="text" th:field="*{email}" required>
+                        <input id="email-new" name="email" class="form-control" type="text" required>
                         <h6><label for="password-new">Password</label></h6>
-                        <input id="password-new" class="form-control" type="password" th:field="*{password}" required>
+                        <input id="password-new" name="password" class="form-control" type="password" required>
                         <h6><label>Role</label></h6>
-                        <select multiple name="roles_id"  class="form-select" size="2" required>
+                        <select multiple id="role_new" name="role1" datatype="" class="form-select" size="2" required>
                             <option value="2">USER</option>
                             <option value="1">ADMIN</option>
                         </select>
                         <br>
-                        <button type="input" class="btn btn-success">Add new user</button>
+                        <button form="new_user_form" type="submit" class="btn btn-success" data-bs-target="#userTable">Add new user</button>
                     </form>
                 </div>
             </div>
