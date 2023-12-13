@@ -2,7 +2,7 @@
 
 
 $('document').ready(function(){
-    Header();
+
     GetUsers();
 
     const formNewUser = document.forms["new_user_form"];
@@ -67,7 +67,7 @@ $('document').ready(function(){
 });
 
 async function CreateUser(data) {
-    const response = await fetch("api/users", {
+    const response = await fetch("api/admins", {
         method: "POST",
         headers: { "Accept": "application/json", "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -88,7 +88,7 @@ async function CreateUser(data) {
 }
 
 async function DeleteUser(id) {
-    const response = await fetch("api/users/" + id, {
+    const response = await fetch("api/admins/" + id, {
         method: "DELETE",
         headers: { "Accept": "application/json" }
     });
@@ -98,64 +98,60 @@ async function DeleteUser(id) {
 }
 
 async function EditUser(data, id) {
-    const response = await fetch("api/users/" + id, {
-        method: "PATCH",
-        headers: { "Accept": "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+    const email = document.getElementById("username-current-user").textContent;
+    const response3 = await fetch ("/api/users/" + email, {
+        method: "GET",
+        headers: { "Accept": "application/json" }
     });
-    if (response.ok === true) {
-        const response2 = await fetch ("/api/users/" + id, {
-            method: "GET",
-            headers: { "Accept": "application/json" }
-        });
-        if (response2.ok === true) {
-            const user = await response2.json();
-            const id_current_user = document.querySelector(".navbar-brand").getAttribute("id_user");
-            if (user.id == id_current_user) {
-                if (user.roleValues.includes("USER") && !user.roleValues.includes("ADMIN")) {
-                    window.location.href = "/user";
-                } else {
-                    HeaderClear();
-                    Header();
-                    NavPanel(user);
-                };
-            }
-            document.querySelector("tr[data-rowid='" + user.id + "']").replaceWith(row(user))
+    if (response3.ok === true) {
+        const current_user = await response3.json();
+
+        const response = await fetch("api/admins/" + id, {
+            method: "PATCH",
+            headers: { "Accept": "application/json", "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        })
+        if (response.ok === true) {
+            const user = await response.json();
+
+                if (user.id == current_user.id) {
+                    if (user.roleValues.includes("USER") && !user.roleValues.includes("ADMIN")) {
+                        window.location.href = "/user";
+                    } else {
+                        HeaderClear();
+                        Header(user);
+                        NavPanel(user);
+                    };
+                }
+            document.querySelector("tr[data-rowid='" + user.id + "']").replaceWith(row(user));
         }
+
     }
+
 }
 
+
+
 async function GetUsers() {
-    const response = await fetch("/api/users", {
+    const response = await fetch("/api/admins", {
         method: "GET",
         headers: { "Accept": "application/json" }
     });
     if (response.ok === true) {
         const users = await response.json();
-        let rows = document.getElementById("table_body_users");
+        let rows = document.getElementById("table-body-users");
         users.forEach(user => {
             rows.append(row(user));
-        })
-    }
+        });
+    };
 };
 
-async function Header() {
-    const id_current_user = parseInt(document.querySelector(".navbar-brand").getAttribute("id_user"));
-    const response = await fetch("api/users/" + id_current_user, {
-        method: "GET",
-        headers: { "Accept": "application/json" }
-    });
-    if (response.ok === true) {
-        const user = await response.json();
-        headerContent(user);
-    }
-}
-
-function headerContent(user) {
+async function Header(user) {
     const span_elem = document.querySelector(".navbar-brand");
     const b_elem = document.createElement("b");
     const text = document.createElement("text");
     const text2 = document.createElement("text");
+    b_elem.setAttribute("id", "username-current-user");
     b_elem.append(user.email);
     text.append(" with roles ");
     text2.append(user.roleValues);
@@ -166,12 +162,13 @@ function headerContent(user) {
 
 function HeaderClear() {
     $(".navbar-brand").empty();
-
 }
 
 function NavPanel(user) {
     if (user.roleValues.includes("ADMIN") && !user.roleValues.includes("USER")) {
-        document.getElementById("nav-link-user").remove();
+        if (document.getElementById('nav-link-user')) {
+            document.getElementById("nav-link-user").remove();
+        }
     } else if (user.roleValues.includes("ADMIN") && user.roleValues.includes("USER")) {
         if (!document.getElementById("nav-link-user")) {
             const elem = document.querySelector("div[class='nav flex-column nav-pills me-5']");
@@ -248,7 +245,7 @@ function row(user) {
 }
 
 async function getUserEdit(id) {
-    const response = await fetch ("/api/users/" + id, {
+    const response = await fetch ("/api/admins/" + id, {
         method: "GET",
         headers: { "Accept": "application/json" }
     });
@@ -269,7 +266,7 @@ async function getUserEdit(id) {
 }
 
 async function getUserDelete(id) {
-    const response = await fetch ("/api/users/" + id, {
+    const response = await fetch ("/api/admins/" + id, {
         method: "GET",
         headers: { "Accept": "application/json" }
     });

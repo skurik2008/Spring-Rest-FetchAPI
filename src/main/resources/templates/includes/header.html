@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       xmlns:th="http://www.w3.org/1999/xhtml">
 <body>
   <div th:fragment="header">
     <header class="p-0 text-bg-dark">
       <div class="container-fluid">
         <div class="navbar navbar-dark bg-dark">
-                    <span class="navbar-brand" th:id_user="${user_current.getId()}">
-                    </span>
+          <span class="navbar-brand" sec:authorize="isAuthenticated()">
+            <b id="username-current-user" sec:authentication="name"></b>
+            <text> with roles </text>
+            <b sec:authentication="principal.authorities"></b>
+          </span>
           <ul class="nav navbar-nav navbar-right">
             <a class="nav-link" href="/login">Logout</a>
           </ul>

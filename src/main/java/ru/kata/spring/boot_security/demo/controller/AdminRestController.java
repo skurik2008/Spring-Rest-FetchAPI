@@ -12,7 +12,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping
 public class AdminRestController {
     private final UserService userService;
 
@@ -21,7 +21,8 @@ public class AdminRestController {
         this.userService = userService;
     }
 
-    @GetMapping("/users")
+
+    @GetMapping("/api/admins")
     public ResponseEntity<List<MyUser>> getUsers() {
 
         final List<MyUser> users = userService.getUsers();
@@ -31,7 +32,7 @@ public class AdminRestController {
                 : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/api/admins/{id}")
     public ResponseEntity<?> getUserById(@PathVariable("id") Long id) {
         final MyUser user = userService.getUser(id);
         return user != null
@@ -39,24 +40,21 @@ public class AdminRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/users")
+    @PostMapping("/api/admins")
     public ResponseEntity<?> add(@RequestBody MyUser user) {
         userService.addUser(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PatchMapping("/users/{id}")
+    @PatchMapping("/api/admins/{id}")
     public ResponseEntity<?> update(@RequestBody MyUser user, @PathVariable("id") Long id, Principal principal) {
         userService.updateUser(user, userService.getUserByName(principal.getName()).getId());
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/api/admins/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         userService.deleteUser(id);
-        return  new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
 }
